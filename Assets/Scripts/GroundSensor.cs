@@ -7,7 +7,7 @@ public class GroundSensor : MonoBehaviour
     private PlayerController controller;
     public bool isGrounded;
 
-    SFXManager sfxManager;
+    private SFXManager sfxManager;
     SoundManager soundManager;
     GameManager gameManager;
 
@@ -17,7 +17,7 @@ public class GroundSensor : MonoBehaviour
         
         sfxManager = GameObject.Find("SFXManager").GetComponent<SFXManager>();
         soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
-        gameManager = GameObject.Find("GameManger").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -25,6 +25,7 @@ public class GroundSensor : MonoBehaviour
         if(other.gameObject.layer == 3)
         {
             isGrounded = true;
+            controller.anim.SetBool("IsJumping",false);
         }
         else if(other.gameObject.layer == 6)
         {
@@ -34,9 +35,7 @@ public class GroundSensor : MonoBehaviour
             
             Enemy goomba = other.gameObject.GetComponent<Enemy>();
             goomba.Die();
-
         }
-
 
         if(other.gameObject.tag == "DeadZone")
         {
@@ -54,6 +53,7 @@ public class GroundSensor : MonoBehaviour
         if(other.gameObject.layer == 3)
         {
             isGrounded = true;
+            controller.anim.SetBool("IsJumping",false);
         }
     }
 
@@ -62,6 +62,7 @@ public class GroundSensor : MonoBehaviour
         if(other.gameObject.layer == 3)
         {
             isGrounded = false;
+            controller.anim.SetBool("IsJumping",true);
         }
     }
 }
